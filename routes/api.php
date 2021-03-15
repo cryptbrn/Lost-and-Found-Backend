@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,4 +12,16 @@ use App\Http\Controllers\Controller;
 |
 */
 
-Route::post('register', 'Auth\RegisterController');
+// Route::namespace('Auth')->group(function (){
+//     Route::post('register', 'RegisterController');
+//     Route::post('login', 'LoginController');
+//     Route::post('logout', 'LogoutController');
+//     Route::get('auth','AuthController');
+
+// });
+
+Route::post('register','AuthController@register');
+Route::post('login','AuthController@login');
+Route::get('auth','AuthController@auth');
+Route::post('logout','AuthController@logout');
+
