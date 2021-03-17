@@ -24,4 +24,5 @@ Route::post('register','AuthController@register');
 Route::post('login','AuthController@login');
 Route::get('auth','AuthController@auth');
 Route::post('logout','AuthController@logout');
+Route::post('post/create-new','PostController@store');
 
