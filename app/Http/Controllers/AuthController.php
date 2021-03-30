@@ -56,6 +56,12 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request){
+        if($request->user()==null){
+            $success = false;
+        }
+        else{
+            $success = true;
+        }
         auth()->logout();
         return response()->json([
             'success'=>$success,

@@ -12,6 +12,7 @@ class Item extends Model
 
     protected $fillable = [
         'name',
+        'post_id',
         'category',
         'location',
         'picture',
@@ -19,8 +20,7 @@ class Item extends Model
 
 
 
-    public function post()
-    {
-        return $this->hasOne(Post::class);
+    public function post(){
+        return $this->belogsTo(Post::class);
     }
 }

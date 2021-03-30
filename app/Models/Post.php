@@ -15,7 +15,6 @@ class Post extends Model
         'type',
         'status',
         'is_deleted',
-        'item_id',
 
     ];
 
@@ -23,9 +22,9 @@ class Post extends Model
         return $this->belogsTo(User::class);
     }
 
-
-    public function item(){
-        return $this->belogsTo(Item::class);
+    public function item()
+    {
+        return $this->hasOne(Item::class);
     }
 
 }
