@@ -4,8 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use JWTAuth;
 
-class Jwt
+class JwtAuthenticate
 {
     /**
      * Handle an incoming request.
@@ -21,9 +22,6 @@ class Jwt
             JWTAuth::parseToken()->authenticate();
             return $next($request);
 
-        }catch(\Tymon\JWTAuth\Exceptions\TokenExpiredException $e){
-            // token expired
-            $message = 'token expired';
         }catch(\Tymon\JWTAuth\Exceptions\TokenInvalidException $e){
             //token invalid
             $message = 'invalid token';

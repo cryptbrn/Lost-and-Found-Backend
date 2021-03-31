@@ -1,5 +1,6 @@
 <?php
 
+use \App\Http\Middleware\JwtAuthenticate;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +21,20 @@
 
 // });
 
+
+
 Route::post('register','AuthController@register');
 Route::post('login','AuthController@login');
 Route::get('auth','AuthController@auth');
 Route::post('logout','AuthController@logout');
-Route::post('post/create-new','PostController@store')->middleware('jwt.auth');
 Route::get('post','PostController@show');
 Route::get('post/{id}','PostController@showbyId');
-Route::put('user','UserController@update')->middleware('jwt.auth');
-Route::delete('user','UserController@delete')->middleware('jwt.auth');
+
+Route::middleware([JwtAuthenticate::class])->group(function(){
+    Route::post('post/create-new','PostController@store');
+    Route::put('user','UserController@update');
+    Route::delete('user','UserController@delete');
+    Route::get('user/{id}','UserController@showbyId');
+});
+
+

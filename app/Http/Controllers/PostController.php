@@ -13,10 +13,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -26,75 +23,47 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->user()==null){
-            $success = false;
-            $message = "autentikasi gagal";
-        }
-        else{
-            $success = true;
-            $request->validate([
-                'title' => ['required'],
-                'description' => ['required'],
-                'type' => ['required'],
-                'status'=> ['required'],
-                'item.name'=>['required'],
-                'item.category'=>['required'],
-                'item.location'=>['required'],
-                'item.picture'=>['required'],
-            ]);
+        $success = true;
+        $request->validate([
+            'title' => ['required'],
+            'description' => ['required'],
+            'type' => ['required'],
+            'status'=> ['required'],
+            'item.name'=>['required'],
+            'item.category'=>['required'],
+            'item.location'=>['required'],
+            'item.picture'=>['required'],
+        ]);
+
+
+        $input = $request->all();
+        $inputItem = $input['item']; 
     
+        $post = auth()->user()->posts()->create([
+                'title' => $input['title'], 
+                'description' => $input['description'],
+                'type' => $input['type'],
+                'status'=> $input['status'],
+                ]);
 
-            $input = $request->all();
-            $inputItem = $input['item']; 
-        
-            $post = auth()->user()->posts()->create([
-                    'title' => $input['title'], 
-                    'description' => $input['description'],
-                    'type' => $input['type'],
-                    'status'=> $input['status'],
-                    ]);
-
-            $item = new Item;
-            $item->name = $input['item']['name'];
-            $item->post_id = $post->id;
-            $item->category = $input['item']['category'];
-            $item->location = $input['item']['location'];
-        
-            if($request->hasFile('item.picture')){
-                $file = $request->file('item.picture');
-                $extenstion = $request['item']['picture']->extension();
-                $picture_name = time().'.'.$extenstion;
-                $file->move('storage/item_picture',$picture_name);
-                $item->picture = $picture_name;
-            }else{
-                $item->picture ='';
-            }
-            $item->save();
-
-            // $item = Item::create([
-            //     'name' => $request->input('item.name'),
-            //     'post_id'=>$post->id,
-            //     'category' => $request->input('item.category'),
-            //     'location' => $request->input('item.location'),
-            //     'picture' => $request->input('item.picture'),
-       
-            //     if($input->item->hasFile('item.picture')){
-            //         $file = $request->file('item.picture');
-            //         $extenstion = $file->getClientOriginalExtension();
-            //         $picture_name = time().'.'.$extenstion;
-            //         $file->move('storage/item_picture',$picture_name);
-            //         $item->foto_pupuk = $picture_name;
-            //     }else{
-            //         return $request;
-            //         $pupuk->foto_pupuk ='';
-            //     }
-            //     $pupuk->save();
-            // ]);
-
-            
-
-            $message = "Post created succesfully";
+        $item = new Item;
+        $item->name = $input['item']['name'];
+        $item->post_id = $post->id;
+        $item->category = $input['item']['category'];
+        $item->location = $input['item']['location'];
+    
+        if($request->hasFile('item.picture')){
+            $file = $request->file('item.picture');
+            $extenstion = $request['item']['picture']->extension();
+            $picture_name = time().'.'.$extenstion;
+            $file->move('storage/item_picture',$picture_name);
+            $item->picture = $picture_name;
+        }else{
+            $item->picture ='';
         }
+        $item->save();        
+
+        $message = "Post created succesfully";
 
 
         return response()->json([
@@ -114,10 +83,19 @@ class PostController extends Controller
     {
 
         $post = Post::with('item')->get();
-        return response()->json([
-            'success'=>true,
-            'post'=>$post
-        ]);
+        if($post!=null){
+            return response()->json([
+                'success'=>true,
+                'post'=>$post
+            ]);
+        }
+        else{
+            return response()->json([
+                'success'=>false,
+                'message'=>'Post not found'
+            ]);
+        }
+        
         
     }
 
@@ -130,7 +108,15 @@ class PostController extends Controller
     public function showbyId($id)
     {
         $post = Post::find($id);
-        $post->item = Item::find($id);
+        if($post!=null){
+            $post->item = Item::find($id);
+        }
+        else {
+            return response()->json([
+                'success'=>false,
+                'message'=>'Post not found'
+            ]);
+        }
 
         return response()->json([
             'success'=>true,

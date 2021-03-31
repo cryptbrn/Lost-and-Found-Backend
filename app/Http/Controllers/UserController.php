@@ -25,4 +25,20 @@ class UserController extends Controller
             'message' => 'user deleted'
         ]);
     }
+
+    public function showbyId($id){
+        $user = User::find($id);
+        if($user!=null){
+            return response()->json([
+                'success' => true,
+                'user' => $user,
+            ]);
+        }
+        else {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found'
+            ]);
+        }
+    }
 }

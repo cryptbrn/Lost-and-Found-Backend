@@ -58,14 +58,16 @@ class AuthController extends Controller
     public function logout(Request $request){
         if($request->user()==null){
             $success = false;
+            $message = "Logout Failed";
         }
         else{
+            auth()->logout();
             $success = true;
+            $message = 'Logout Success';
         }
-        auth()->logout();
         return response()->json([
             'success'=>$success,
-            'message'=>'Logout Success'
+            'message'=>$message,
             
         ]);
 
