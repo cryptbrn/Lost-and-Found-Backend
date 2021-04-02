@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Post;
+use Illuminate\Support\Facades\Validator;
+use Exception;
+
 
 class PostController extends Controller
 {
@@ -23,53 +26,61 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $success = true;
-        $request->validate([
-            'title' => ['required'],
-            'description' => ['required'],
-            'type' => ['required'],
-            'status'=> ['required'],
-            'item.name'=>['required'],
-            'item.category'=>['required'],
-            'item.location'=>['required'],
-            'item.picture'=>['required'],
-        ]);
-
-
-        $input = $request->all();
-        $inputItem = $input['item']; 
-    
-        $post = auth()->user()->posts()->create([
-                'title' => $input['title'], 
-                'description' => $input['description'],
-                'type' => $input['type'],
-                'status'=> $input['status'],
-                ]);
-
-        $item = new Item;
-        $item->name = $input['item']['name'];
-        $item->post_id = $post->id;
-        $item->category = $input['item']['category'];
-        $item->location = $input['item']['location'];
-    
-        if($request->hasFile('item.picture')){
-            $file = $request->file('item.picture');
-            $extenstion = $request['item']['picture']->extension();
-            $picture_name = time().'.'.$extenstion;
-            $file->move('storage/item_picture',$picture_name);
-            $item->picture = $picture_name;
-        }else{
-            $item->picture ='';
+        $validator = Validator::make($request->all(),[
+                        'title' => ['required'],
+                        'description' => ['required'],
+                        'type' => ['required'],
+                        'status'=> ['required'],
+                        'item.name'=>['required'],
+                        'item.category'=>['required'],
+                        'item.location'=>['required'],
+                        'item.picture'=>['required'],
+                    ]);
+        
+        if($validator->fails()){
+            return response()->json([
+                'success'=>false,
+                'message'=>$validator->errors()->first(),
+            ]);
         }
-        $item->save();        
 
-        $message = "Post created succesfully";
+        try{
+            $input = $request->all();
+            $post = auth()->user()->posts()->create([
+                    'title' => $input['title'], 
+                    'description' => $input['description'],
+                    'type' => $input['type'],
+                    'status'=> $input['status'],
+                    ]);
+    
+            $item = new Item;
+            $item->name = $input['item']['name'];
+            $item->post_id = $post->id;
+            $item->category = $input['item']['category'];
+            $item->location = $input['item']['location'];
+        
+            if($request->hasFile('item.picture')){
+                $file = $request->file('item.picture');
+                $extenstion = $request['item']['picture']->extension();
+                $picture_name = time().'.'.$extenstion;
+                $file->move('storage/item_picture',$picture_name);
+                $item->picture = $picture_name;
+            }else{
+                $item->picture ='';
+            }
+            $item->save();
 
-
-        return response()->json([
-            'success'=>$success,
-            'message'=>$message,
-        ]);
+            return response()->json([
+                'success'=>true,
+                'message'=>'Post created succesfully',
+            ]);   
+        }
+        catch(Exception $excp){
+            return response()->json([
+                'success'=>false,
+                'message'=>''.$excp
+            ]);
+        }
     }
 
     
@@ -107,9 +118,12 @@ class PostController extends Controller
      */
     public function showbyId($id)
     {
-        $post = Post::find($id);
+        $post = Post::with('item')->find($id);
         if($post!=null){
-            $post->item = Item::find($id);
+            return response()->json([
+                'success'=>true,
+                'post'=>$post
+            ]);
         }
         else {
             return response()->json([
@@ -118,10 +132,7 @@ class PostController extends Controller
             ]);
         }
 
-        return response()->json([
-            'success'=>true,
-            'post'=>$post
-        ]);
+        
     }
 
     /**
@@ -133,7 +144,40 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $post = Post::find($id);
+            $item_id = Item::select('id')->where('post_id','=',$id)->get();
+            $item = Item::find($item_id);
+            $post->title = $request->title;
+            $post->description = $request->description;
+            $post->type = $request->type;
+            $item->name = $request->name;
+            $item->category = $request->location;
+            if($request->hasFile('item.picture')){
+                $file = $request->file('item.picture');
+                $extenstion = $request['item']['picture']->extension();
+                $picture_name = time().'.'.$extenstion;
+                $file->move('storage/item_picture',$picture_name);
+                $item->picture = $picture_name;
+            }else{
+                $item->picture ='';
+            }
+    
+            $post->update();
+            $item->update();
+
+            return response()->json([
+                'success'=>true,
+                'message'=>'Post updated'
+            ]);
+        }
+        catch(Exception $excp){
+            return response()->json([
+                'success'=>false,
+                'message'=>''.$excp
+            ]);
+        }
+        
     }
 
     /**
@@ -144,6 +188,30 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $post = Post::find($id);
+            if($post!=null){
+                $post->id_deleted = true;
+                $post->update();
+                return response()->json([
+                    'success'=>true,
+                    'message'=>'Post deleted successfully'
+                ]);
+            }
+            else{
+                return response()->json([
+                    'success'=>false,
+                    'message'=>'Post not found'
+                ]);
+            }
+            
+        }
+        catch(Exception $excp){
+            return response()->json([
+                'success'=>false,
+                'message'=>''.$excp
+            ]);
+        }
+        
     }
 }

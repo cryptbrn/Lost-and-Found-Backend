@@ -22,6 +22,7 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'username',
+        'picture',
         'telephone',
         'role',
         'faculty',
@@ -73,6 +74,18 @@ class User extends Authenticatable implements JWTSubject
 
     public function posts(){
         return $this->hasMany(Post::class);
+    }
+
+    public function student(){
+        return $this->hasOne(Student::class);
+    }
+
+    public function lecturer(){
+        return $this->hasOne(Lecturer::class);
+    }
+
+    public function staff(){
+        return $this->hasOne(Staff::class);
     }
 
 }

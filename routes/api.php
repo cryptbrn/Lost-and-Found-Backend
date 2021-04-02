@@ -32,9 +32,12 @@ Route::get('post/{id}','PostController@showbyId');
 
 Route::middleware([JwtAuthenticate::class])->group(function(){
     Route::post('post/create-new','PostController@store');
-    Route::put('user','UserController@update');
+    Route::post('user','UserController@update');
     Route::delete('user','UserController@delete');
     Route::get('user/{id}','UserController@showbyId');
+    Route::post('post/{id}', 'PostController@update');
+    Route::delete('post/{id}','PostController@destroy');
+    Route::post('post-done/{id}','PostController@done');
 });
 
 

@@ -29,10 +29,6 @@ class RegisterRequest extends FormRequest
             'email' => ['email', 'required', 'unique:users,email'],
             'password' => [ 'required', 'min:6'],
             'telephone' => ['required', 'unique:users,telephone'],
-            'role' => ['required', 'string'],
-            'faculty' => ['string'],
-            'department' => ['string'],
-            'batch' => ['integer']
         ];
     }
 }
