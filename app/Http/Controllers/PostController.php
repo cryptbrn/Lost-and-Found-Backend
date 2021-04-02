@@ -146,13 +146,14 @@ class PostController extends Controller
     {
         try{
             $post = Post::find($id);
-            $item_id = Item::select('id')->where('post_id','=',$id)->get();
+            $item_id = Item::where('post_id','=',$id)->value('id');
             $item = Item::find($item_id);
             $post->title = $request->title;
             $post->description = $request->description;
             $post->type = $request->type;
-            $item->name = $request->name;
-            $item->category = $request->location;
+            $item->name = $request->item['name'];
+            $item->category = $request->item['category'];
+            $item->location = $request->item['location'];
             if($request->hasFile('item.picture')){
                 $file = $request->file('item.picture');
                 $extenstion = $request['item']['picture']->extension();
@@ -191,7 +192,7 @@ class PostController extends Controller
         try{
             $post = Post::find($id);
             if($post!=null){
-                $post->id_deleted = true;
+                $post->is_deleted = true;
                 $post->update();
                 return response()->json([
                     'success'=>true,
@@ -213,5 +214,32 @@ class PostController extends Controller
             ]);
         }
         
+    }
+
+    public function done($id){
+        try{
+            $post = Post::find($id);
+            if($post!=null){
+                $post->status = true;
+                $post->update();
+                return response()->json([
+                    'success'=>true,
+                    'message'=>'Post status updated successfully'
+                ]);
+            }
+            else{
+                return response()->json([
+                    'success'=>false,
+                    'message'=>'Post not found'
+                ]);
+            }
+            
+        }
+        catch(Exception $excp){
+            return response()->json([
+                'success'=>false,
+                'message'=>''.$excp
+            ]);
+        }
     }
 }
