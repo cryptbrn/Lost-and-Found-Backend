@@ -179,6 +179,27 @@ class PostController extends Controller
         
     }
 
+    public function updateStatus(Request $request, $id)
+    {
+        try{
+            $post = Post::find($id);
+            $post->type = $request->type;
+            $post->update();
+
+            return response()->json([
+                'success'=>true,
+                'message'=>'Post updated'
+            ]);
+        }
+        catch(Exception $excp){
+            return response()->json([
+                'success'=>false,
+                'message'=>''.$excp
+            ]);
+        }
+        
+    }
+
     /**
      * Remove the specified resource from storage.
      *
