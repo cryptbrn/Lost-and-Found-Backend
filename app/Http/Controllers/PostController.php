@@ -160,8 +160,6 @@ class PostController extends Controller
                 $picture_name = time().'.'.$extenstion;
                 $file->move('storage/item_picture',$picture_name);
                 $item->picture = $picture_name;
-            }else{
-                $item->picture ='';
             }
     
             $post->update();
@@ -214,32 +212,5 @@ class PostController extends Controller
             ]);
         }
         
-    }
-
-    public function done($id){
-        try{
-            $post = Post::find($id);
-            if($post!=null){
-                $post->status = true;
-                $post->update();
-                return response()->json([
-                    'success'=>true,
-                    'message'=>'Post status updated successfully'
-                ]);
-            }
-            else{
-                return response()->json([
-                    'success'=>false,
-                    'message'=>'Post not found'
-                ]);
-            }
-            
-        }
-        catch(Exception $excp){
-            return response()->json([
-                'success'=>false,
-                'message'=>''.$excp
-            ]);
-        }
     }
 }

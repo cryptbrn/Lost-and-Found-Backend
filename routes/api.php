@@ -37,7 +37,6 @@ Route::middleware([JwtAuthenticate::class])->group(function(){
     Route::get('user/{id}','UserController@showbyId');
     Route::post('post/{id}', 'PostController@update');
     Route::delete('post/{id}','PostController@destroy');
-    Route::post('post-done/{id}','PostController@done');
 });
 
 
