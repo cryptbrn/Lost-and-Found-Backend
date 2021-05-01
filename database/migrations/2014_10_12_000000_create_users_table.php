@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('telephone')->unique(); 
             $table->string('role');
             $table->string('email')->unique();
+            $table->boolean('is_deactivated')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('picture');

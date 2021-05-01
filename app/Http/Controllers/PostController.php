@@ -183,7 +183,7 @@ class PostController extends Controller
     {
         try{
             $post = Post::find($id);
-            $post->type = $request->type;
+            $post->status = $request->type;
             $post->update();
 
             return response()->json([

@@ -18,8 +18,8 @@ class CreatePostsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->string('description');
-            $table->integer('type');
-            $table->boolean('status');
+            $table->boolean('type');
+            $table->integer('status');
             $table->boolean('is_deleted')->default(false);
             $table->timestamps();
         });
