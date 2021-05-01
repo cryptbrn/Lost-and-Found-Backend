@@ -92,7 +92,10 @@ class AuthController extends Controller
                 ]);
             }
     
-            return response()->json(compact('token'));
+            return response()->json([
+                'success'=>true,
+                'token'=>$token
+            ]);
         }
         else{
             if(!$token = auth()->attempt($request->only('username', 'password'))){
@@ -102,7 +105,10 @@ class AuthController extends Controller
                 ]);
             }
     
-            return response()->json(compact('token'));
+            return response()->json([
+                'success'=>true,
+                'token'=>$token
+            ]);
         }
 
         
