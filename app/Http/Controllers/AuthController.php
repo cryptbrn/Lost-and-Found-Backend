@@ -8,6 +8,7 @@ use App\Models\Student;
 use App\Models\Lecturer;
 use App\Models\Staff;
 use Exception;
+use Hash;
 
 
 
@@ -66,19 +67,31 @@ class AuthController extends Controller
     }
 
     public function login(Request $request){
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required',
-        ]);
-
-        if(!$token = auth()->attempt($request->only('email', 'password'))){
-            return response()->json([
-                'success'=>false,
-                'message'=>'Credentials Invalid'
-            ]);
+        $email = request('email');
+        $username = request('username');
+        $password = request('password');
+        if($username==""){
+            if(!$token = auth()->attempt($request->only('email', 'password'))){
+                return response()->json([
+                    'success'=>false,
+                    'message'=>'Credentials Invalid'
+                ]);
+            }
+    
+            return response()->json(compact('token'));
+        }
+        else{
+            if(!$token = auth()->attempt($request->only('username', 'password'))){
+                return response()->json([
+                    'success'=>false,
+                    'message'=>'Credentials Invalid'
+                ]);
+            }
+    
+            return response()->json(compact('token'));
         }
 
-        return response()->json(compact('token'));
+        
 
     }
 
@@ -126,6 +139,37 @@ class AuthController extends Controller
             
         ]);
 
+    }
+
+    public function changePassword(Request $request){
+        $currentPassword = auth()->user()->password;
+        $oldPassword = request("old_password");
+        if(Hash::check($oldPassword, $currentPassword)){
+            try{
+                auth()->user()->update([
+                    'password' => bcrypt(request('password'))
+                ]);
+                return response()->json([
+                    'success'=>true,
+                    'message'=>"Password changed succesfully",
+                ]);
+                
+            }
+            catch(Exception $excp){
+                return response()->json([
+                    'success'=>false,
+                    'message'=>''.$excp
+                ]);
+            }
+        }
+        else{
+            return response()->json([
+                'success'=>false,
+                'message'=>"The old password you have entered is incorrect"
+            ]);
+        }
+        
+        
     }
     
 }
