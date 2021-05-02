@@ -1,6 +1,7 @@
 <?php
 
 use \App\Http\Middleware\JwtAuthenticate;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,12 @@ Route::get('auth','AuthController@auth');
 Route::post('logout','AuthController@logout');
 Route::get('post','PostController@show');
 Route::get('post/{id}','PostController@showbyId');
+Route::get('email/verify/{id}', 'VerificationController@verify')->name('verification.verify');
+Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
+Route::post('password/email','ResetPasswordController@sendReset');
+Route::post('password/reset','ResetPasswordController@reset');
+
+
 
 Route::middleware([JwtAuthenticate::class])->group(function(){
     Route::post('reset-password','AuthController@changePassword');

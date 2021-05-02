@@ -38,6 +38,8 @@ class AuthController extends Controller
                     'role' => request('role'),
                     'picture'=> ''
                     ]);
+                
+                $user->sendEmailVerificationNotification();
     
                 if($request->role=='student'){
                     Student::create([
