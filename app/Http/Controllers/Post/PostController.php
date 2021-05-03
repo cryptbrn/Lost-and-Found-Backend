@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Post;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Post;
 use Illuminate\Support\Facades\Validator;
 use Exception;
+use App\Http\Controllers\Controller;
+
 
 
 class PostController extends Controller
@@ -183,7 +185,7 @@ class PostController extends Controller
     {
         try{
             $post = Post::find($id);
-            $post->status = $request->type;
+            $post->status = $request->status;
             $post->update();
 
             return response()->json([

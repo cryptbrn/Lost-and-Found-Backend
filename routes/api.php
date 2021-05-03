@@ -14,38 +14,30 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-// Route::namespace('Auth')->group(function (){
-//     Route::post('register', 'RegisterController');
-//     Route::post('login', 'LoginController');
-//     Route::post('logout', 'LogoutController');
-//     Route::get('auth','AuthController');
+Route::namespace('Auth')->group(function (){
+    Route::post('register', 'RegisterController');
+    Route::post('login', 'LoginController');
+    Route::post('logout', 'LogoutController');
+    Route::get('auth','AuthController');
+    Route::get('email/verify/{id}', 'VerificationController@verify')->name('verification.verify');
+    Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
+    Route::post('password/email','ResetPasswordController@sendReset');
+    Route::post('password/reset','ResetPasswordController@reset');
 
-// });
+});
 
-
-
-Route::post('register','AuthController@register');
-Route::post('login','AuthController@login');
-Route::get('auth','AuthController@auth');
-Route::post('logout','AuthController@logout');
-Route::get('post','PostController@show');
-Route::get('post/{id}','PostController@showbyId');
-Route::get('email/verify/{id}', 'VerificationController@verify')->name('verification.verify');
-Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
-Route::post('password/email','ResetPasswordController@sendReset');
-Route::post('password/reset','ResetPasswordController@reset');
-
-
+Route::get('post','Post\PostController@show');
+Route::get('post/{id}','Post\PostController@showbyId');
 
 Route::middleware([JwtAuthenticate::class])->group(function(){
-    Route::post('reset-password','AuthController@changePassword');
-    Route::post('post/create-new','PostController@store');
-    Route::post('user','UserController@update');
-    Route::delete('user','UserController@deactivate');
-    Route::get('user/{id}','UserController@showbyId');
-    Route::post('post/{id}', 'PostController@update');
-    Route::delete('post/{id}','PostController@destroy');
-    Route::post('post-status/{id}', 'PostController@updateStatus');
+    Route::post('reset-password','Auth\ChangePasswordController');
+    Route::post('post/create-new','Post\PostController@store');
+    Route::post('user','Account\UserController@update');
+    Route::delete('user','Account\UserController@deactivate');
+    Route::get('user/{id}','Account\UserController@showbyId');
+    Route::post('post/{id}', 'Post\PostController@update');
+    Route::delete('post/{id}','Post\PostController@destroy');
+    Route::post('post-status/{id}', 'Post\PostController@updateStatus');
 });
 
 
