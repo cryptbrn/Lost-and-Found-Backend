@@ -44,13 +44,11 @@ class ResetPasswordController extends Controller
             $email_password_status = Password::reset($credentials, function($user, $password){
                 $user->password = bcrypt($password);
                 $user->save();
+                return redirect()->to('/password-changed');
             });
     
             if($email_password_status== Password::INVALID_TOKEN){
-                return response()->json([
-                    'success'=>false,
-                    'message'=>'Token Invalid'
-                ]);
+                return redirect()->to('/password-error');
             }
         }
 

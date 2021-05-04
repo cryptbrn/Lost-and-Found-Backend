@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,15 +7,16 @@
     <title>Reset Password - Lost and Found IPB</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="shortcut icon" href="fav.png">
 
     <!-- Styles -->
     <style>
         html, body {
-            background-color: #020c67;
+            background-color: #011A48;
             background-image: url('img/bg-pattern.png');
             color: #636b6f;
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Montserrat', arial;
             font-weight: 200;
             height: 100vh;
             margin: 0;

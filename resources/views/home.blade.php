@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,8 +5,6 @@
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
 
 <title>Lost and Found IPB</title>
 
@@ -20,6 +17,7 @@
 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+<link rel="shortcut icon" href="fav.png">
 
 <!-- Plugin CSS -->
 <link rel="stylesheet" href="device-mockups/device-mockups.min.css">
@@ -48,14 +46,14 @@
         <a class="nav-link js-scroll-trigger" href="#features">Features</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+        <a class="nav-link js-scroll-trigger" href="#contact">Repository</a>
       </li>
     </ul>
   </div>
 </div>
 </nav>
 
-<header class="masthead">
+<header class="backhead">
 <div class="container h-100">
   <div class="row h-100">
     <div class="col-lg-7 my-auto">
@@ -69,11 +67,7 @@
         <div class="device-mockup iphone6_plus portrait white">
           <div class="device">
             <div class="screen">
-              <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
               <img src="img/apps_screen2.png" class="img-fluid" alt="">
-            </div>
-            <div class="button">
-              <!-- You can hook the "home button" to some JavaScript events or just remove it -->
             </div>
           </div>
         </div>
@@ -83,11 +77,11 @@
 </div>
 </header>
 
-<section class="download bg-primary text-center" id="download">
+<section class="download text-center" id="download">
 <div class="container">
   <div class="row">
     <div class="col-md-8 mx-auto">
-      <h2 class="section-heading">Discover what all the buzz is about!</h2>
+      <h2 class="section-heading">Downlaod this apps now and find your lost item!</h2>
       <p>Right now our app is only available on Android, Download now to get started!</p>
       <div class="badges">
         <a class="badge-link" href="https://ipb.link/download-lostandfoundipb"><img src="img/download-badge.svg" alt=""></a>
@@ -99,9 +93,9 @@
 
 <section class="features" id="features">
 <div class="container">
-  <div class="section-heading text-center">
-    <h2>Unlimited Features, Unlimited Fun</h2>
-    <p class="text-muted">Check out what you can do with this app theme!</p>
+  <div class="section-features text-center">
+    <h2>We make things easier for you to find your lost item, check this app now!</h2>
+    <p class="text-muted">We'll help you to find your lost items and retrieving back the items that you found to the rightful owner</p>
     <hr>
   </div>
   <div class="row">
@@ -109,11 +103,7 @@
       <div class="device-container">
           <div class="device">
             <div class="screen">
-              <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
               <img src="img/apps_screen1.png" class="img-fluid" alt="">
-            </div>
-            <div class="button">
-              <!-- You can hook the "home button" to some JavaScript events or just remove it -->
             </div>
           </div>
       </div>
@@ -123,11 +113,7 @@
         <div class="device-mockup iphone6_plus portrait white">
           <div class="device">
             <div class="screen">
-              <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
               <img src="img/apps_screen2.png" class="img-fluid" alt="">
-            </div>
-            <div class="button">
-              <!-- You can hook the "home button" to some JavaScript events or just remove it -->
             </div>
           </div>
         </div>
@@ -137,11 +123,7 @@
       <div class="device-container">
           <div class="device">
             <div class="screen">
-              <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
               <img src="img/apps_screen3.png" class="img-fluid" alt="">
-            </div>
-            <div class="button">
-              <!-- You can hook the "home button" to some JavaScript events or just remove it -->
             </div>
           </div>
       </div>
@@ -152,16 +134,16 @@
 
 
 
-<section class="contact bg-primary" id="contact">
+<section class="contact" id="contact">
 <div class="container">
 <div class="section-heading text-center">
     <h2>We are open!</h2>
-    <p class="text-muted">Check out our project repository below</p>
+    <p>Check out our project repository below</p>
     <hr>
   </div>
   <ul class="list-inline list-social">
-    <li class="list-inline-item social-twitter">
-      <a href="#">
+    <li class="list-inline-item social-github">
+      <a href="https://github.com/cryptbrn/Lost-and-Found-IPB">
         <i class="fab fa-github"></i>
       </a>
     </li>

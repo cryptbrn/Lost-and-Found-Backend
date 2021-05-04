@@ -10,10 +10,7 @@ class VerificationController extends Controller
 {
     public function verify($id, Request $request){
         if(!$request->hasValidSignature()){
-            return response()->json([
-                'success'=>false,
-                'message'=> 'Error'
-            ]);
+            return redirect()->to('/email-error');
         }
 
         $user = User::findOrFail($id);
@@ -21,7 +18,7 @@ class VerificationController extends Controller
             $user->markEmailAsVerified();
         }
 
-        return redirect()->to('/');
+        return redirect()->to('/email-verified');
     }
 
 
@@ -34,6 +31,6 @@ class VerificationController extends Controller
         }
 
         auth()->user()->sendEmailVerificationNotification();
-        return $this->respondWithMessage("Email sudah dikirim");
+        return $this->respondWithMessage("New verification link has been sent to your email");
     }
 }
