@@ -28,6 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'faculty',
         'department',
         'batch',
+        'is_deactivated'
 
     ];
 

@@ -68,18 +68,18 @@
 <div class="flex-center position-ref full-height">
     <form class="form-container" action="api/password/reset" method="POST">
         <h2>Reset Password</h2>
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
         <input hidden name="email" placeholder="Enter email" value="{{request()->get('email')}}">
+        @error('email')
+            <span>{{ $message }}</span>
+        @enderror
         <input type = "password" name="password" placeholder="Enter new password">
+        @error('password')
+            <span>{{ $message }}</span>
+        @enderror
         <input type = "password" name="password_confirmation" placeholder="Confirm new password">
+        @error('password_confirmation')
+            <span>{{ $message }}</span>
+        @enderror
         <input hidden name="token" placeholder="token" value="{{request()->get('token')}}">
         <button type="submit">Submit</button>
     </form>

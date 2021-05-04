@@ -31,30 +31,20 @@ class ResetPasswordController extends Controller
     }
 
     public function reset(Request $request){
-        $validator = Validator::make($request->all(), [
+        $this->validate($request,[
             'email' => 'required|email',
             'password' => 'required|string|max:25|confirmed',
             'token' => 'required|string'
         ]);
-        if($validator -> fails()){
-            return redirect()->back()->withErrors($validator->errors()->all());
-        }
-        else {
-            $credentials = request()->all();
+        $credentials = request()->all();
             $email_password_status = Password::reset($credentials, function($user, $password){
                 $user->password = bcrypt($password);
                 $user->save();
-                return redirect()->to('/password-changed');
             });
     
             if($email_password_status== Password::INVALID_TOKEN){
                 return redirect()->to('/password-error');
             }
-        }
-
-
-        
-
-
+            return redirect()->to('/password-changed');
     }
 }

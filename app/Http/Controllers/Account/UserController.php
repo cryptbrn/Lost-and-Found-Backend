@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controller\Account;
+namespace App\Http\Controllers\Account;
 
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -15,9 +15,6 @@ use App\Http\Controllers\Controller;
 class UserController extends Controller
 {
     public function update(Request $request){
-         auth()->user()->update([
-                    'password' => bcrypt(request('password'))
-                ]);
         try{
             if(auth()->user()->id == $request->id){
                 $request->id = (int)$request->id;
@@ -84,14 +81,14 @@ class UserController extends Controller
 
     public function deactivate(Request $request){
         try{
-            $user = User::find($request->id);
-            $user->is_deactivated = true;
-            $user->update();
+            auth()->user()->update([
+                'is_deactivated' => true
+            ]);
             auth()->logout();
 
             return response()->json([
                 'success' => true,
-                'message' => 'user deactivated'
+                'message' => 'User deactivated'
             ]);
         }
         catch(Exception $excp){

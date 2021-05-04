@@ -32,6 +32,13 @@ class LoginController extends Controller
                     'message'=>'You need to validate your email address first, we have sent you verification link, please check your email'
                 ]);
             }
+            if($user->is_deactivated){
+                return response()->json([
+                    'success'=>false,
+                    'message'=>'Your account has been deactivated, please contact admin'
+                ]);
+            }
+
     
             return response()->json([
                 'success'=>true,
@@ -52,6 +59,13 @@ class LoginController extends Controller
                 return response()->json([
                     'success'=>false,
                     'message'=>'You need to validate your email address first, we have sent you verification link, please check your email'
+                ]);
+            }
+
+            if($user->is_deactivated){
+                return response()->json([
+                    'success'=>false,
+                    'message'=>'Your account has been deactivated, please contact admin'
                 ]);
             }
 

@@ -30,7 +30,7 @@ Route::get('post','Post\PostController@show');
 Route::get('post/{id}','Post\PostController@showbyId');
 
 Route::middleware([JwtAuthenticate::class])->group(function(){
-    Route::post('reset-password','Auth\ChangePasswordController');
+    Route::post('password/change','Auth\ChangePasswordController');
     Route::post('post/create-new','Post\PostController@store');
     Route::post('user','Account\UserController@update');
     Route::delete('user','Account\UserController@deactivate');

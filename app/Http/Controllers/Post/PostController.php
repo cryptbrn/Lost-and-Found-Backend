@@ -190,7 +190,7 @@ class PostController extends Controller
 
             return response()->json([
                 'success'=>true,
-                'message'=>'Post updated'
+                'message'=>'Status updated'
             ]);
         }
         catch(Exception $excp){

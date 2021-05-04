@@ -26,7 +26,7 @@ class VerificationController extends Controller
         if(auth()->user()->hasVerifiedEmail()){
             return response()->json([
                 'success'=>false,
-                'message'=> 'User telah verifikasi'
+                'message'=> 'User email address has been verified'
             ]);
         }
 
