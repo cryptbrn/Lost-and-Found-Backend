@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Student;
 use App\Models\Lecturer;
+use App\Models\Staff;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 
