@@ -63,8 +63,7 @@ class PostController extends Controller
         
             if($request->hasFile('item.picture')){
                 $file = $request->file('item.picture');
-                $extenstion = $request['item']['picture']->extension();
-                $picture_name = time().'.'.$extenstion;
+                $picture_name = $request['item']['picture']->getClientOriginalName();
                 $file->move('storage/item_picture',$picture_name);
                 $item->picture = $picture_name;
             }else{
@@ -158,8 +157,7 @@ class PostController extends Controller
             $item->location = $request->item['location'];
             if($request->hasFile('item.picture')){
                 $file = $request->file('item.picture');
-                $extenstion = $request['item']['picture']->extension();
-                $picture_name = time().'.'.$extenstion;
+                $picture_name = $request['item']['picture']->getClientOriginalName();
                 $file->move('storage/item_picture',$picture_name);
                 $item->picture = $picture_name;
             }

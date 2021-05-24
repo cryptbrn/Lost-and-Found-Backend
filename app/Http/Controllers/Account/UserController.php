@@ -26,8 +26,7 @@ class UserController extends Controller
         
                 if($request->hasFile('picture')){
                     $file = $request->file('picture');
-                    $extenstion = $request->picture->extension();
-                    $picture_name = $user->id.time().'.'.$extenstion;
+                    $picture_name = $user->id."_".$request->picture->getClientOriginalName();
                     $file->move('storage/user_picture',$picture_name);
                     $user->picture = $picture_name;
                 }
