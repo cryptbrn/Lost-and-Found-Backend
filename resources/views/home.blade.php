@@ -81,7 +81,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8 mx-auto">
-      <h2 class="section-heading">Downlaod this apps now and find your lost item!</h2>
+      <h2 class="section-heading">Download this apps now and find your lost item!</h2>
       <p>Right now our app is only available on Android, Download now to get started!</p>
       <div class="badges">
         <a class="badge-link" href="https://ipb.link/download-lostandfoundipb"><img src="img/download-badge.svg" alt=""></a>
